@@ -33,10 +33,10 @@ cd $dirpath
 #parse args, check if deploy is for linux or windows
 if [ "${args[0]}" == "--win" ]; then
     #if windows change child process line for exe then generate exe 
-    nexe --target win32 -i ./GPWTrader/bin/www && cd $currentdir && electron-packager $dirpath --platform win32 --overwrite
+    nexe --target win32 -i ./LocalAPI/bin/www && cd $currentdir && electron-packager $dirpath --platform win32 --overwrite
 else
     #if linux just make executable and deploy
-    nexe -i ./GPWTrader/bin/www && cd $currentdir && electron-packager $dirpath --overwrite
+    nexe -i ./LocalAPI/bin/www && cd $currentdir && electron-packager $dirpath --overwrite
     #create .desktop file with input:
     cd electron_app-linux-x64
     echo "[Desktop Entry]" > .desktop

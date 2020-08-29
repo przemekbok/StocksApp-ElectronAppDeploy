@@ -40,7 +40,7 @@ else
     cp -R build $catalogname
 
     #copy GPWTrader to build directory
-    gpwtdir="${catalogname}/GPWTrader"
+    gpwtdir="${catalogname}/LocalAPI"
     mkdir $gpwtdir
     git clone https://github.com/przemekbok/StocksApp-DataAPI $gpwtdir
     cd $gpwtdir
