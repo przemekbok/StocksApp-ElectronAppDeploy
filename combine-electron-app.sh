@@ -1,5 +1,10 @@
 #!/bin/bash
+#to make this script do this job you need:
+# * 'build' directory with react app production deploy
+# React App - StocksApp-Frontend -> https://github.com/przemekbok/StocksApp-Frontend 
+# * StocksApp-DataAPI -> https://github.com/przemekbok/StocksApp-DataAPI
 
+#provide credentials for .env, just plain <LOGIN> and <PASSWORD> 
 if [ $# -eq 0 ]; then
     echo "You need to provide credentials for GPWTraderAPI database."
 else
@@ -37,19 +42,19 @@ else
     #copy GPWTrader to build directory
     gpwtdir="${catalogname}/GPWTrader"
     mkdir $gpwtdir
-    git clone /home/przemo/Documents/Prace/Magisterka/APImisc/GPWTrader $gpwtdir
+    git clone https://github.com/przemekbok/StocksApp-DataAPI $gpwtdir
     cd $gpwtdir
     rm -fr .git
-    npm install && cd .. #&& nexe -i ./GPWTrader/bin/www
+    npm install && cd .. 
 
     #modify Main.js
     sed -i -e "s/'..\/build'/'.\/build'/g" Main.js
 
-    #add gpwtrader API server to an app
+    #add a reference about local API to Main.js
     sed -i -e "s/\/\/init-process/const process = require('child_process').execFile(\`\${__dirname}\/www\`);/g" Main.js 
     sed -i -e "s/\/\/kill-process/process.kill('SIGKILL');/g" Main.js 
 
-    #add .env to gpw server
+    #add .env to local API
     printf "LOGIN=${args[0]}\nPASSWORD=${args[1]}\nADDRESS=gpwtrader.ok87b.mongodb.net/gpwtrader?retryWrites=true&w=majority" > ./GPWTrader/.env
 fi
 
